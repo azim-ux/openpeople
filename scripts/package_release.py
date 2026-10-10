@@ -12,6 +12,7 @@ top_level.extend(['cloud_backup.py','statutory.py','statutory_uk.py','enterprise
 top_level.extend(['pay_periods.py','operations.py'])
 top_level.append('service_runner.py')
 top_level.append('provisioning.py')
+top_level.append('.gitattributes')
 top_level.extend(['core_hr.py','core_acceptance.py'])
 paths=[root/name for name in top_level]
 extensions={'.py','.md','.json','.mjs','.js','.css','.html','.svg','.log','.yml','.yaml'}

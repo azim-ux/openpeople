@@ -16,7 +16,7 @@ def public_path(name):
     if name=='SOURCE_MANIFEST.json':return False
     if path.suffix in ('.log','.private','.pem','.key','.db','.opbackup'):return False
     if len(path.parts)==1:
-        return path.suffix in ('.py','.md','.toml','.lock','.txt','.json','.command','.bat') or name in ('LICENSE','.gitignore')
+        return path.suffix in ('.py','.md','.toml','.lock','.txt','.json','.command','.bat') or name in ('LICENSE','.gitignore','.gitattributes')
     if path.parts[0]=='docs':return len(path.parts)==2 and path.suffix=='.md'
     return path.parts[0] in ('public','tests','scripts','deploy','.github','installers') and path.suffix in ('.py','.mjs','.js','.css','.html','.svg','.md','.yml','.yaml','.json') or path.parts[0]=='deploy' and path.name=='Caddyfile'
 

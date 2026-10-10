@@ -2,6 +2,7 @@
   "version": "0.8.2",
   "scope": "Public source only; no deployment credentials or private test logs",
   "files": {
+    ".gitattributes": "74f066599d3fe2817756c3e532a869d370d4294c5c0a188487da2855f9b2378e",
     ".github/dependabot.yml": "408abbeb3fb78cce167b200431268e3cc47b40b7b6ba0f158c9a819a571bde99",
     ".github/workflows/installers.yml": "bb506fd690a8d27594f2a066359150b9462f52b4be722fd70fc7bbc1771d9b61",
     ".github/workflows/verify.yml": "25ab2300f860fc0e178ac66ae10f9d32d519e9d8a749adddba451cf2ca9e2297",
@@ -74,8 +75,8 @@
     "scripts/deployment_check.py": "6829bfe1c477f54f870db210ca8862e4579cdaee0074ebdfd8e43e0616adae84",
     "scripts/operations_check.py": "f076fbb6669dca175f8679b87831103f6fd4d14f1e47b530107161a2ff6de54c",
     "scripts/package_installers.py": "1d24dccffc9ee9595e625bba9a9652155424faa3dba567ea30f9a5063d5b60ac",
-    "scripts/package_public.py": "cd31066af4ed7db59e9030083fc64c681717ab42dcf0818f5cff43c8b981b677",
-    "scripts/package_release.py": "1d85bd203b33d288c3e3017f72835a44602ce11b2a48a4fd9e85e85c25da63e6",
+    "scripts/package_public.py": "09d40a87622a6cff4a648d9f854a4a3470dc5d317ca70e40cb43ad13b4afe643",
+    "scripts/package_release.py": "755da438a358446e83b300c4e5709dcb886eab527b346a7183ef1e525d823227",
     "scripts/run_service.py": "184aba97d87f1215b127bc3763df05ffaf76d6ab0ef7c264025fceb893c9721b",
     "scripts/setup_workspace.py": "8b436136c7c9ebf78f5104a1f61773f58092472617dc8e9efb8e099327d5cd69",
     "scripts/start_identity_configured.py": "44b4551587196b102edfaef8645498e74e42036b23bc4d704ae9f6e20201d8ba",
