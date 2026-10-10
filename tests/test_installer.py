@@ -156,6 +156,7 @@ class InstallerTests(unittest.TestCase):
             installer.windows_private_acl(self.root)
         self.assertEqual(apply_acl.call_count, 2)
         self.assertIn('*S-1-5-32-544', apply_acl.call_args.args[0])
+        self.assertIn('*S-1-3-4', apply_acl.call_args.args[0])
         for call in powershell.call_args_list:
             self.assertFalse(any(k.lower() == 'psmodulepath' for k in call.kwargs['env']))
         script = base64.b64decode(powershell.call_args.args[0][-1]).decode('utf-16-le')

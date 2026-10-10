@@ -71,7 +71,7 @@ def windows_private_acl(root):
     sid = subprocess.check_output(['powershell.exe', '-NoProfile', '-NonInteractive', '-Command', "$ErrorActionPreference='Stop'; [System.Security.Principal.WindowsIdentity]::GetCurrent().User.Value"], text=True, timeout=15, env=environment).strip()
     if not re.fullmatch(r'S-1-(?:5|12)-[0-9-]+', sid): raise ValueError('Could not identify the installing Windows account.')
     subprocess.run(['icacls.exe', str(root), '/inheritance:r', '/grant:r', '*' + sid + ':(OI)(CI)F', '*S-1-5-18:(OI)(CI)F'], check=True, stdout=subprocess.DEVNULL, timeout=15)
-    subprocess.run(['icacls.exe', str(root), '/remove:g', '*S-1-5-32-544'], check=True, stdout=subprocess.DEVNULL, timeout=15)
+    subprocess.run(['icacls.exe', str(root), '/remove:g', '*S-1-5-32-544', '*S-1-3-4'], check=True, stdout=subprocess.DEVNULL, timeout=15)
     # Refuse pre-existing explicit grants to other accounts as well.
     script = "$ErrorActionPreference='Stop'; $allowed=@('" + sid + "','S-1-5-18'); $acl=Get-Acl -LiteralPath '" + str(root).replace("'", "''") + "'; if ($null -eq $acl) { throw 'ACL unavailable' }; $unexpected=@($acl.Access | Where-Object { $_.AccessControlType -eq 'Allow' -and $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value -notin $allowed }); if ($unexpected.Count -ne 0) { throw ('Unexpected Windows directory grants: ' + (($unexpected | ForEach-Object { $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value }) -join ', ')) }; Write-Output 'OPENPEOPLE_ACL_PRIVATE'"
     encoded = base64.b64encode(script.encode('utf-16-le')).decode()
