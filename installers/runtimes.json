@@ -1,0 +1,22 @@
+{
+  "python_version": "3.13.16",
+  "release": "20261009",
+  "supplier": "https://github.com/astral-sh/python-build-standalone",
+  "targets": {
+    "macos-arm64": {
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261009/cpython-3.13.16%2B20261009-aarch64-apple-darwin-install_only_stripped.tar.gz",
+      "sha256": "11785155d0f70e634178219c20925d8f20be00a3da4684fc4f5019dd15602ef7",
+      "platforms": ["macosx_11_0_arm64"]
+    },
+    "windows-x64": {
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261009/cpython-3.13.16%2B20261009-x86_64-pc-windows-msvc-install_only_stripped.tar.gz",
+      "sha256": "3a7adfb69e3ff02a41ed38ac637808532b438ab3c8619af46ca5dbec5c1f5190",
+      "platforms": ["win_amd64"]
+    },
+    "linux-x64": {
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261009/cpython-3.13.16%2B20261009-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz",
+      "sha256": "24801ea31c7d406d559a17e2226325c723d50c56900b9c0da7b62adaae2affc9",
+      "platforms": ["manylinux_2_28_x86_64", "manylinux_2_17_x86_64", "manylinux2014_x86_64"]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+    admin off
+    auto_https disable_redirects
+    servers {
+        max_header_size 16KB
+        enable_full_duplex
+        timeouts {
+            read_header 3s
+            read_body 5s
+            read_body_idle 1s 1024
+            write 30s
+            idle 15s
+        }
+    }
+}
+
+# Replace this private address with the host's actual VPN address.
+https://10.7.0.1 {
+    bind 10.7.0.1
+    tls internal
+    header Strict-Transport-Security "max-age=31536000"
+    request_body {
+        max_size 16KB
+    }
+    reverse_proxy 127.0.0.1:8000 {
+        request_buffers 16KB
+        transport http {
+            dial_timeout 3s
+            response_header_timeout 20s
+        }
+    }
+}
