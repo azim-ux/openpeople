@@ -53,7 +53,7 @@
     "government_submission.py": "30787e491e6329f2e264ea9e36f4cdcb013f42d87045180786ac104ca8157d99",
     "identity.py": "fd7268b23ad152ef876ef590b08c0d7654a6c718b839618227d00bcb9cda0e78",
     "installers/desktop.py": "13239b4a40a839b2af87cd9dd7d7436a8eb40d9e1839101d1acaeff0f546a2ee",
-    "installers/installer.py": "ae7fa486adf010c5cfd68e0fe58367b5ee5bca01de70a57580fbb01cd93005da",
+    "installers/installer.py": "cca85fd094952f8862e4e67283c8c45ec4e09fec4cab875f6708c24ed7095563",
     "installers/runtimes.json": "faee634ed88e41ace1887f84ea8f13769cb57ae2c768dc7593caab81e4fc9426",
     "localization.py": "c60bb7812a743af82726beae7b14de3d132abcabc6173686c43298d15d6e0482",
     "manage.py": "aca7a3f47af4b5e7496b37e764a3bcea5ef12c19acbeaa770d37531cf3add374",
