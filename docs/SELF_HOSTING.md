@@ -13,7 +13,7 @@ The shared host must remain on and reachable while the team uses it. Teammate co
 
 ## Download and install
 
-Download `openpeople-0.8.1-github.zip` from the project's GitHub release, or download its repository source ZIP. Extract into a dedicated folder outside cloud-synced folders. Open a terminal in the extracted folder containing `README.md`, `requirements.txt` and `server.py`. The clean package contains no employee records or credentials.
+Download `openpeople-0.8.2-github.zip` from the project's GitHub release, or download its repository source ZIP. Extract into a dedicated folder outside cloud-synced folders. Open a terminal in the extracted folder containing `README.md`, `requirements.txt` and `server.py`. The clean package contains no employee records or credentials.
 
 Install Python 3.12 or newer through your normal platform installation method. Installation needs internet access to fetch dependencies. Afterward the local application can run offline; optional SSO and cloud uploads need access to their providers.
 

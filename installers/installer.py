@@ -64,13 +64,16 @@ def private_directory(path):
 
 def windows_private_acl(root):
     if os.name != 'nt': return
-    sid = subprocess.check_output(['powershell.exe', '-NoProfile', '-NonInteractive', '-Command', '[System.Security.Principal.WindowsIdentity]::GetCurrent().User.Value'], text=True, timeout=15).strip()
+    # PowerShell 7's inherited module path can break Windows PowerShell 5.1.
+    environment = {key: value for key, value in os.environ.items() if key.lower() != 'psmodulepath'}
+    sid = subprocess.check_output(['powershell.exe', '-NoProfile', '-NonInteractive', '-Command', "$ErrorActionPreference='Stop'; [System.Security.Principal.WindowsIdentity]::GetCurrent().User.Value"], text=True, timeout=15, env=environment).strip()
     if not re.fullmatch(r'S-1-(?:5|12)-[0-9-]+', sid): raise ValueError('Could not identify the installing Windows account.')
     subprocess.run(['icacls.exe', str(root), '/inheritance:r', '/grant:r', '*' + sid + ':(OI)(CI)F', '*S-1-5-18:(OI)(CI)F'], check=True, stdout=subprocess.DEVNULL, timeout=15)
     # Refuse pre-existing explicit grants to other accounts as well.
-    script = "$allowed=@('" + sid + "','S-1-5-18'); $acl=Get-Acl -LiteralPath '" + str(root).replace("'", "''") + "'; if (@($acl.Access | Where-Object { $_.AccessControlType -eq 'Allow' -and $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value -notin $allowed }).Count -ne 0) { exit 1 }"
+    script = "$ErrorActionPreference='Stop'; $allowed=@('" + sid + "','S-1-5-18'); $acl=Get-Acl -LiteralPath '" + str(root).replace("'", "''") + "'; if ($null -eq $acl) { throw 'ACL unavailable' }; if (@($acl.Access | Where-Object { $_.AccessControlType -eq 'Allow' -and $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value -notin $allowed }).Count -ne 0) { exit 1 }; Write-Output 'OPENPEOPLE_ACL_PRIVATE'"
     encoded = base64.b64encode(script.encode('utf-16-le')).decode()
-    subprocess.run(['powershell.exe', '-NoProfile', '-NonInteractive', '-EncodedCommand', encoded], check=True, stdout=subprocess.DEVNULL, timeout=15)
+    result = subprocess.check_output(['powershell.exe', '-NoProfile', '-NonInteractive', '-EncodedCommand', encoded], text=True, timeout=15, env=environment).strip()
+    if result != 'OPENPEOPLE_ACL_PRIVATE': raise ValueError('Windows directory privacy could not be verified.')
 
 
 @contextmanager
@@ -81,9 +84,10 @@ def workspace_lock(root):
     if is_link(path): raise ValueError('The workspace lock was replaced.')
     descriptor = os.open(path, os.O_RDWR | os.O_CREAT | getattr(os, 'O_NOFOLLOW', 0), 0o600)
     with os.fdopen(descriptor, 'r+b') as handle:
-        if not handle.read(1): handle.write(b'0'); handle.flush()
-        handle.seek(0)
         try:
+            # Windows byte-range locks prohibit even reading the locked byte.
+            if os.fstat(handle.fileno()).st_size == 0: handle.write(b'0'); handle.flush()
+            handle.seek(0)
             if os.name == 'nt':
                 import msvcrt
                 msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)

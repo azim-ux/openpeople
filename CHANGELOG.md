@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.2 — Hosted installer acceptance fixes
+
+- Windows ACL verification now treats PowerShell errors and missing confirmation as failure, and removes incompatible inherited PowerShell module paths.
+- Windows workspace locking detects an active host without reading its locked byte.
+- Installer safety fixtures resolve macOS temporary-directory aliases while preserving rejection of user-selected symlink paths.
+- Added three Windows permission-verification regressions. Core HR behavior and dependency versions are unchanged.
+- Public repository and installer instructions link to GitHub downloads and hosted acceptance results.
+
 ## 0.8.1 — Offline installer kits
 
 - Added per-user Windows x64, macOS Apple Silicon and Linux x64 installer ZIPs containing SHA-256-pinned portable Python and hash-verified application wheels. No global Python installation or install-time download is required. Current cryptography dependencies no longer support Intel Mac wheels; no dependency downgrade is used.

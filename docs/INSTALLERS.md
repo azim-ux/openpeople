@@ -1,4 +1,4 @@
-# Offline installers — OpenPeople 0.8.1
+# Offline installers — OpenPeople 0.8.2
 
 These per-user installer ZIPs include Python 3.13.16, pinned application libraries and clean Core HR source. Users do not need Python, pip, Docker, an OpenPeople account or internet access to install or run the local application. Optional cloud backups and SSO still need their chosen providers. The ZIPs are install kits, not MSI/EXE setup wizards, notarized PKGs or Linux distribution packages.
 
@@ -6,11 +6,11 @@ These per-user installer ZIPs include Python 3.13.16, pinned application librari
 
 | Computer | Release asset | Run after extracting the entire ZIP |
 | --- | --- | --- |
-| Windows Intel/AMD 64-bit | `openpeople-0.8.1-windows-x64-installer.zip` | Double-click `Install.cmd` |
-| Mac with Apple Silicon | `openpeople-0.8.1-macos-arm64-installer.zip` | Open `Install.command` |
-| Linux Intel/AMD 64-bit with glibc 2.28+ | `openpeople-0.8.1-linux-x64-installer.zip` | Run `./install.sh` in a terminal |
+| Windows Intel/AMD 64-bit | `openpeople-0.8.2-windows-x64-installer.zip` | Double-click `Install.cmd` |
+| Mac with Apple Silicon | `openpeople-0.8.2-macos-arm64-installer.zip` | Open `Install.command` |
+| Linux Intel/AMD 64-bit with glibc 2.28+ | `openpeople-0.8.2-linux-x64-installer.zip` | Run `./install.sh` in a terminal |
 
-Compare the ZIP's SHA-256 to the separately published `openpeople-0.8.1-SHA256SUMS.txt` before extraction. Do not run directly inside a ZIP viewer. If an extractor strips Unix executable permissions, restore them for the installer and bundled interpreter: `chmod u+x Install.command payload/runtime/bin/python3` (Mac), or `chmod u+x install.sh payload/runtime/bin/python3` (Linux). Choose the package matching your processor. Windows ARM, Linux ARM and Alpine/musl are not included in this release. Intel Macs are also excluded: current [cryptography releases removed macOS x86_64 support](https://cryptography.io/en/latest/changelog/#v49-0-0). This installer does not downgrade that dependency to restore Intel support.
+Compare the ZIP's SHA-256 to the separately published `openpeople-0.8.2-SHA256SUMS.txt` before extraction. Do not run directly inside a ZIP viewer. If an extractor strips Unix executable permissions, restore them for the installer and bundled interpreter: `chmod u+x Install.command payload/runtime/bin/python3` (Mac), or `chmod u+x install.sh payload/runtime/bin/python3` (Linux). Choose the package matching your processor. Windows ARM, Linux ARM and Alpine/musl are not included in this release. Intel Macs are also excluded: current [cryptography releases removed macOS x86_64 support](https://cryptography.io/en/latest/changelog/#v49-0-0). This installer does not downgrade that dependency to restore Intel support.
 
 The packages are unsigned and not notarized. Follow the platform's normal approval process for software from a publisher you trust; do not disable Gatekeeper, antivirus or execution policy. Managed computers may require IT approval. Native testing evidence is recorded separately: producing a package for another OS does not certify it on that OS.
 
@@ -63,4 +63,4 @@ The builder uses digest-pinned [Python Build Standalone runtimes](https://github
 .venv/bin/python scripts/package_installers.py
 ```
 
-Publish the three `*-installer.zip` assets, `openpeople-0.8.1-SHA256SUMS.txt`, installer verification report and clean `openpeople-0.8.1-github.zip` from `release/`. Do not publish `installer-cache/`, temporary build directories, internal source archives or an installed workspace. The supplied installer workflow builds and tests the native package on Windows, macOS and Linux, then makes build artifacts available; it does not upload a release automatically. Its first hosted execution remains pending until the project is published to a repository. Follow [the publishing guide](GITHUB_RELEASE.md).
+Publish the three `*-installer.zip` assets, `openpeople-0.8.2-SHA256SUMS.txt`, installer verification report and clean `openpeople-0.8.2-github.zip` from `release/`. Do not publish `installer-cache/`, temporary build directories, internal source archives or an installed workspace. The supplied installer workflow builds and tests the native package on Windows, macOS and Linux, then makes build artifacts available; it does not upload a release automatically. Hosted build and native acceptance results are available in [GitHub Actions](https://github.com/azim-ux/openpeople/actions). Check the run for the release commit before relying on its evidence. Follow [the publishing guide](GITHUB_RELEASE.md).

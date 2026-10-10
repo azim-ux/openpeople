@@ -1,10 +1,12 @@
 """Install/update/uninstall safety without modifying the real user profile."""
 import hashlib
+import base64
 import importlib.util
 import json
 import os
 from pathlib import Path
 import tempfile
+import subprocess
 import unittest
 from unittest.mock import patch
 
@@ -18,7 +20,7 @@ class InstallerTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
-        self.base = Path(self.temporary.name)
+        self.base = Path(self.temporary.name).resolve()
         self.kit = self.base / 'kit'
         (self.kit / 'payload/runtime/bin').mkdir(parents=True)
         (self.kit / ('payload/runtime/python.exe' if os.name == 'nt' else 'payload/runtime/bin/python3')).write_text('fake runtime')
@@ -148,6 +150,24 @@ class InstallerTests(unittest.TestCase):
         before = protected.read_bytes()
         with self.assertRaises(ValueError): installer.uninstall(self.root)
         self.assertEqual(protected.read_bytes(), before)
+
+    def test_windows_acl_verification_requires_explicit_success(self):
+        with patch.object(installer.os, 'name', 'nt'), patch.dict(os.environ, {'PSModulePath': 'incompatible PowerShell modules'}), patch.object(installer.subprocess, 'run') as apply_acl, patch.object(installer.subprocess, 'check_output', side_effect=['S-1-5-21-123\n', 'OPENPEOPLE_ACL_PRIVATE\n']) as powershell:
+            installer.windows_private_acl(self.root)
+        apply_acl.assert_called_once()
+        for call in powershell.call_args_list:
+            self.assertFalse(any(k.lower() == 'psmodulepath' for k in call.kwargs['env']))
+        script = base64.b64decode(powershell.call_args.args[0][-1]).decode('utf-16-le')
+        self.assertIn("$ErrorActionPreference='Stop'", script)
+        self.assertIn("Write-Output 'OPENPEOPLE_ACL_PRIVATE'", script)
+
+    def test_windows_acl_verification_fails_closed_on_missing_output(self):
+        with patch.object(installer.os, 'name', 'nt'), patch.object(installer.subprocess, 'run'), patch.object(installer.subprocess, 'check_output', side_effect=['S-1-5-21-123', '']):
+            with self.assertRaises(ValueError): installer.windows_private_acl(self.root)
+
+    def test_windows_acl_verification_propagates_powershell_errors(self):
+        with patch.object(installer.os, 'name', 'nt'), patch.object(installer.subprocess, 'run'), patch.object(installer.subprocess, 'check_output', side_effect=['S-1-5-21-123', subprocess.CalledProcessError(1, 'powershell')]):
+            with self.assertRaises(subprocess.CalledProcessError): installer.windows_private_acl(self.root)
 
 
 if __name__ == '__main__': unittest.main()

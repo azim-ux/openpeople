@@ -1,0 +1,7 @@
+# OpenPeople 0.8.2 installer patch
+
+The first public GitHub installer run passed Linux native acceptance and exposed a macOS fixture-path alias and Windows lock handling and ACL verification problems. The patch resolves the temporary fixture path without relaxing installer symlink protections, avoids reading an already locked Windows byte, removes incompatible inherited PowerShell module paths, and requires both terminating errors and explicit successful ACL verification before proceeding.
+
+Core HR application modules, schema and dependency versions are unchanged. The installer suite includes three additional permission-verification cases covering positive confirmation, missing confirmation and a PowerShell failure. Native installation, startup, MFA, encrypted backups, reinstall and uninstall are checked on the platform matrix. Hosted results are recorded separately from original local 0.8.1 evidence; consult the release notes and [Actions](https://github.com/azim-ux/openpeople/actions) for completed results.
+
+This remains an unsigned Core HR release candidate. Installation-specific real remote-network access, independently stored backup restoration, host security and employer acceptance remain required before real employee data. Complete statutory payroll, government transmission and Workday feature parity are outside this release. See [installation instructions](INSTALLERS.md) and [Core HR acceptance](CORE_HR_RELEASE.md).

@@ -1,8 +1,8 @@
-# OpenPeople 0.8.1
+# OpenPeople 0.8.2
 
 An MIT-licensed, self-hosted HR workspace. Download the source from GitHub and run it on your own laptop, desktop or server. The browser interface, Python backend and database run on the host you choose; no OpenPeople hosting account or paid application server is required. It provides Workday-inspired navigation with original branding and code, shared team access, authenticator MFA, optional organization SSO, and encrypted recovery backups. OpenPeople is not affiliated with Workday or Kotak.
 
-Use it on one computer at **http://127.0.0.1:8000**, or let a team connect to one shared host over private HTTPS/VPN. Each installation keeps its own data and creates its own administrator. Start with the [download and self-hosting guide](docs/SELF_HOSTING.md).
+Use it on one computer at **http://127.0.0.1:8000**, or let a team connect to one shared host over private HTTPS/VPN. Each installation keeps its own data and creates its own administrator. [Download installers](https://github.com/azim-ux/openpeople/releases/tag/v0.8.2), then follow the [self-hosting guide](docs/SELF_HOSTING.md).
 
 **Install without Python setup:** download the [offline installer ZIP for Windows, macOS or Linux](docs/INSTALLERS.md), extract it and run its installer. Python and application libraries are included. Use the source-install commands below if you prefer to maintain your own Python environment.
 
@@ -12,7 +12,7 @@ You do not need to supply a personal email to build or publish this software. Th
 Protected tests use fictional records and disposable workspaces/services. The [latest review](docs/DEPLOYMENT_REVIEW_0.8.0.md) records backend, real-browser, packaged production launch, TLS, VPN and encrypted recovery evidence. No second device or actual external cloud account is available, so those installation acceptance checks remain pending.
 ## Download and run on your own computer
 
-Download `openpeople-0.8.1-github.zip` from the project's GitHub release, or download the repository's source ZIP. Extract into a dedicated folder outside cloud-synced folders, then open a terminal in the folder containing this README. This is a source distribution: install Python 3.12 or newer first, then create a private virtual environment and install dependencies.
+Download `openpeople-0.8.2-github.zip` from the project's GitHub release, or download the repository's source ZIP. Extract into a dedicated folder outside cloud-synced folders, then open a terminal in the folder containing this README. This is a source distribution: install Python 3.12 or newer first, then create a private virtual environment and install dependencies.
 
 On macOS/Linux:
 
