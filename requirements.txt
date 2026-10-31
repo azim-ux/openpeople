@@ -18,7 +18,7 @@ pyjwt==2.15.1
     # via openpeople
 requests==2.34.2
     # via openpeople
-tzdata==2026.5
+tzdata==2026.6
     # via openpeople
 urllib3==2.8.0
     # via requests
